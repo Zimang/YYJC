@@ -17,10 +17,13 @@ mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
 # 打印MFCC特征的形状
 print(f"MFCC shape: {mfccs.shape}")
 
+# 对MFCC特征进行标准化处理
+mfccs = (mfccs - np.mean(mfccs, axis=1, keepdims=True)) / np.std(mfccs, axis=1, keepdims=True)
+
 # 可视化MFCC特征
 plt.figure(figsize=(10, 4))
-librosa.display.specshow(mfccs, sr=sr, x_axis='time')
-plt.colorbar()
+librosa.display.specshow(mfccs, sr=sr, x_axis='time', cmap='viridis')
+plt.colorbar(format='%+2.0f dB')
 plt.title('MFCC')
 plt.tight_layout()
 plt.show()
